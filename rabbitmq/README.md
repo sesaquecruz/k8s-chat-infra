@@ -51,6 +51,8 @@ kubectl port-forward svc/rabbitmq -n cluster-app 15672:15672
 
 FQDN:
 
+- Port: 5672.
+
 ```
  rabbitmq.cluster-app.svc.cluster.local
 ```
