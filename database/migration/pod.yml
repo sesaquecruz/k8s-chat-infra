@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-migrate
+  namespace: chat-app
+spec:
+  serviceAccount: chat-app-account
+  containers:
+  - name: postgres-migrate
+    image: sesaquecruz/postgres-chat-database:1.0.0-migrate
+    resources:
+      limits:
+        cpu: "0.2"
+        memory: 200Mi
+    envFrom:
+    - secretRef:
+        name: postgres-migrate-secret
+    command: ["migrate", "-path", "/migrations", "-database", "$(DATABASE_DSN)", "-verbose", "up" ]
+  restartPolicy: Never

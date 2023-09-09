@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-cluster
+  namespace: chat-app
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-cluster
+  template:
+    metadata:
+      labels:
+        app: postgres-cluster
+    spec:
+      serviceAccount: chat-app-account
+      containers:
+      - name: postgres-cluster
+        image: postgres:15.3-alpine
+        resources:
+          requests: 
+            cpu: 200m
+            memory: 350Mi
+          limits:
+            cpu: 400m
+            memory: 700Mi
+        startupProbe:
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 30
+          exec:
+            command: ["pg_isready", "-U", "$POSTGRES_USER", "-d", "$POSTGRES_DB"]
+        livenessProbe:
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 30
+          exec:
+            command: ["pg_isready", "-U", "$POSTGRES_USER", "-d", "$POSTGRES_DB"]
+        readinessProbe:
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 6
+          exec:
+            command: ["pg_isready", "-U", "$POSTGRES_USER", "-d", "$POSTGRES_DB"]
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+            name: postgres-secret
+        volumeMounts:
+          - name: data
+            mountPath: /var/lib/pgsql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 10Gi
