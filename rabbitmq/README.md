@@ -54,5 +54,5 @@ FQDN:
 - Port: 5672.
 
 ```
- rabbitmq.cluster-app.svc.cluster.local
+rabbitmq.cluster-app.svc.cluster.local
 ```

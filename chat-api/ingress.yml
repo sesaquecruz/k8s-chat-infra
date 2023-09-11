@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chat-api-ingress
+  namespace: chat-app
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: git.chat.api.sesaque.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: chat-api-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+      - git.chat.api.sesaque.com
+      secretName: chat-api-letsencrypt-secret

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-api-service
+  namespace: chat-app
+spec:
+  selector:
+    app: chat-api
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
