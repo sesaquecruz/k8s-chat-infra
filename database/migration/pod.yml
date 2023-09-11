@@ -7,7 +7,7 @@ spec:
   serviceAccount: chat-app-account
   containers:
   - name: postgres-migrate
-    image: sesaquecruz/postgres-chat-database:1.0.0-migrate
+    image: sesaquecruz/postgres-chat-database:1.1.0-migrate
     resources:
       limits:
         cpu: "0.2"
