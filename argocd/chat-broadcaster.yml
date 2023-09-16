@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-broadcaster
+  namespace: chat-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-broadcaster
+  template:
+    metadata:
+      labels:
+        app: chat-broadcaster
+    spec:
+      serviceAccount: chat-app-account
+      containers:
+      - name: chat-broadcaster
+        image: sesaquecruz/go-chat-broadcaster:1.0.0
+        resources:
+          requests: 
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            cpu: 200m
+            memory: 400Mi
+        startupProbe:
+          httpGet:
+            path: /api/v1/healthz
+            port: 8080
+          periodSeconds: 5
+          failureThreshold: 30
+        readinessProbe:
+          httpGet:
+            path: /api/v1/healthz
+            port: 8080
+          periodSeconds: 5
+          failureThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /api/v1/healthz
+            port: 8080
+          periodSeconds: 5
+          failureThreshold: 3
+          timeoutSeconds: 5
+          successThreshold: 1
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: chat-broadcaster-secret
+        - configMapRef:
+            name: chat-broadcaster-cfgmap
