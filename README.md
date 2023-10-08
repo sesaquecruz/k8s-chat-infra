@@ -2,14 +2,6 @@
 
 This repository contains the configuration files for setting up a Kubernetes cluster and deploying the components of the Chat App.
 
-
-## Applications
-
-Currently the applications are running in a Kubernetes cluster using GKE on GCP.
-
-- [Chat Api (swagger documentation)](https://git.chat.api.sesaque.com/api/v1/swagger/index.html)
-- Chat App (web app)
-
 ## Repositories
 
 Instructions:
