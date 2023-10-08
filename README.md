@@ -14,13 +14,11 @@ GitHub:
 
 - [Chat Api](https://github.com/sesaquecruz/go-chat-api)
 - [Chat Broadcaster](https://github.com/sesaquecruz/go-chat-broadcaster)
-- [Chat App](https://github.com/sesaquecruz/react-chat-app)
 
 DockerHub:
 
 - [Chat Api](https://hub.docker.com/r/sesaquecruz/go-chat-api/tags)
 - [Chat Broadcaster](https://hub.docker.com/r/sesaquecruz/go-chat-broadcaster/tags)
-- [Chat App](https://hub.docker.com/r/sesaquecruz/react-chat-app/tags)
 
 ## Contributing
 
